@@ -1,5 +1,6 @@
 PKG_NAME := go-rest-api
 PKG_PATH := /go/src/$(PKG_NAME)
+PKG_HTTPROUTER := /go/src/github.com/julienschmidt/httprouter
 
 .PHONY: help all start stop build run reset ssh
 
@@ -14,7 +15,7 @@ start: ## Start the app container
 stop: ## Stop the app container
 	docker stop $(PKG_NAME)
 
-build: ## Build the app binary
+build: $(PKG_HTTPROUTER) ## Build the app binary
 	docker exec -it $(PKG_NAME) go build
 
 run: ## Run the app
@@ -24,3 +25,6 @@ reset: build run ## Rebuild and run the app
 
 ssh: ## Enter the app container
 	docker exec -it $(PKG_NAME) /bin/bash
+
+$(PKG_HTTPROUTER): ## Get httprouter
+	docker exec -it $(PKG_NAME) sh -c 'go get "github.com/julienschmidt/httprouter"'
