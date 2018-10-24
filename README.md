@@ -7,6 +7,7 @@ This is a small REST API for user management.\
 Requirements:
 * docker
 * make
+* curl
 
 ## Setup
 1. `git clone` the repo somewhere
